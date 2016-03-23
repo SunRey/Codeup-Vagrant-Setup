@@ -5,16 +5,19 @@
 # Codeup Server Setup
 #############################
 
-box      = 'ubuntu/trusty64'
-hostname = 'codeup-trusty'
-domain   = 'codeup.dev'
-ip       = '192.168.77.77'
-ram      = '512'
+box           = 'ubuntu/trusty64'
+vmware_box    = 'puppetlabs/ubuntu-14.04-64-nocm'
+parallels_box = 'parallels/ubuntu-14.04'
+hostname      = 'codeup-vm'
+domain        = 'codeup.dev'
+ip            = '192.168.77.77'
+ram           = '512'
+num_cpus      = '1'
 
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.define "vagrant" do |v|
+  config.vm.define hostname do |v|
     v.vm.box = box
 
     v.vm.hostname = hostname
@@ -36,11 +39,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.name = hostname
 
       vb.memory = ram
-      vb.cpus = 1
+      vb.cpus   = num_cpus
 
       vb.customize ["modifyvm",             :id, "--natdnshostresolver1", "on"]
       vb.customize ["setextradata",         :id, "--VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
       vb.customize ["guestproperty", "set", :id, "--timesync-threshold",  "1000"]
+    end
+
+    # Configuration options for the VMware Fusion provider.
+    v.vm.provider :vmware_fusion do |v, override|
+      v.vmx["memsize"]  = ram
+      v.vmx["numvcpus"] = num_cpus
+
+      override.vm.box = vmware_box
+    end
+
+    # Configuration options for the Parallels provider.
+    v.vm.provider :parallels do |v, override|
+      v.update_guest_tools = true
+      v.customize ["set", :id, "--longer-battery-life", "off"]
+
+      v.memory = ram
+      v.cpus   = num_cpus
+
+      override.vm.box = parallels_box
     end
 
     v.vm.provision :ansible do |ansible|
