@@ -1,0 +1,4 @@
+---
+- name: Development domains must end with .dev
+  assert:
+    that: domain.endswith(".dev")

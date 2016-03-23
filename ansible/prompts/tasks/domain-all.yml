@@ -1,0 +1,7 @@
+---
+- name: Clean domain name
+  set_fact: "domain={{ domain | trim | lower }}"
+
+- name: Domains cannot have spaces
+  assert:
+    that: not domain | search("\s")

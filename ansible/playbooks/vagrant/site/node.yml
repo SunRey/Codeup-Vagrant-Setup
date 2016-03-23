@@ -1,24 +1,9 @@
 ---
+- include: ../../../prompts/vagrant/domain.yml
+
 - name: Create Node.js Site
-  hosts: vagrant
+  hosts: codeup-vm
   remote_user: vagrant
 
-  vars_prompt:
-    - name:    domain
-      prompt:  Domain Name (e.g. codeup.dev)
-      private: no
-
-  pre_tasks:
-    - name: Clean domain name
-      set_fact: "domain={{ domain | trim | lower }}"
-
-    - name: Development domains must end with .dev
-      assert:
-        that: domain.endswith(".dev")
-
-    - name: Domains cannot have spaces
-      assert:
-        that: not domain | search("\s")
-
   roles:
-    - Node
+    - bbatsche.Node
