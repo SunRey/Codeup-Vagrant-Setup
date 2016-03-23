@@ -1,6 +1,6 @@
 ---
 - name: Create Dynamic PHP Site
-  hosts: vagrant
+  hosts: codeup-vm
   remote_user: vagrant
 
   vars:
@@ -23,4 +23,23 @@
         that: not domain | search("\s")
 
   roles:
-    - PHP
+    - bbatsche.Codeup-PHP
+
+    ##############################################################
+    ##       ULTRA TOP SECRET PHP 7 INSTALL! OMGWTFBBQ!!!       ##
+    ##############################################################
+    ## Comment out the role entry above                         ##
+    ## Uncomment the lines below                                ##
+    ## Create PHP sites like you would normally                 ##
+    ## Be patient! PHP 7 is compiled from source the first time ##
+
+    # - role: bbatsche.Phpenv
+    #   php_version: 7.0.4
+    #   xdebug_version: 2.4.0
+    #   phpunit_version: ~5.2
+    #   pecl_extensions:
+    #   - name: yaml
+    #     version: 2.0.0RC7
+    #   - name: imagick
+    #     version: 3.4.1
+

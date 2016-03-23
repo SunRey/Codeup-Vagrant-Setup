@@ -1,6 +1,6 @@
 ---
 - name: Create Static PHP Site
-  hosts: vagrant
+  hosts: codeup-vm
   remote_user: vagrant
 
   vars:
@@ -23,4 +23,4 @@
         that: not domain | search("\s")
 
   roles:
-    - PHP
+    - bbatsche.Codeup-PHP
