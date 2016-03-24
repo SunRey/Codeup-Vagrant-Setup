@@ -7,6 +7,12 @@
     - ../../hosts/group_vars/all.yml
     - ../../hosts/host_vars/codeup-vm.yml
 
+  post_tasks:
+    - name: Cd to /vagrant on Log In
+      lineinfile:
+        dest: "{{ ansible_user_dir }}/.bashrc"
+        line: cd /vagrant
+
   roles:
     - bbatsche.Base
     - bbatsche.MySQL-Install
