@@ -1,12 +1,9 @@
 ---
-- include: ../../../prompts/vagrant/domain.yml
+- include: ../../../prompts/dev-domain.yml
 
 - name: Create Python 3.4 Site
   hosts: codeup-vm
-  remote_user: vagrant
-
-  vars:
-    python_version: 3.4
 
   roles:
-    - bbatsche.Python
+    - role: bbatsche.Python
+      python_version: 3.4

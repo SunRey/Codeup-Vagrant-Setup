@@ -1,9 +1,8 @@
 ---
-- include: ../../../prompts/vagrant/domain.yml
+- include: ../../../prompts/dev-domain.yml
 
 - name: Create Node.js Site
   hosts: codeup-vm
-  remote_user: vagrant
 
   roles:
     - bbatsche.Node

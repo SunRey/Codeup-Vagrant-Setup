@@ -1,15 +1,12 @@
 ---
-- include: ../../../prompts/vagrant/domain.yml
+- include: ../../../prompts/dev-domain.yml
 
 - name: Create Dynamic PHP Site
   hosts: codeup-vm
-  remote_user: vagrant
-
-  vars:
-    dynamic_php: yes
 
   roles:
-    - bbatsche.Codeup-PHP
+    - role: bbatsche.Codeup-PHP
+      dynamic_php: yes
 
     ##############################################################
     ##       ULTRA TOP SECRET PHP 7 INSTALL! OMGWTFBBQ!!!       ##
@@ -20,6 +17,7 @@
     ## Be patient! PHP 7 is compiled from source the first time ##
 
     # - role: bbatsche.Phpenv
+    #   dynamic_php: yes
     #   php_version: 7.0.4
     #   xdebug_version: 2.4.0
     #   phpunit_version: ~5.2

@@ -1,11 +1,14 @@
 ---
 - hosts: codeup-vm
   gather_facts: no
+
   vars_prompt:
   - name:    domain
     prompt:  Domain Name (e.g. codeup.dev)
     private: no
 
   pre_tasks:
-    - include: ../tasks/domain-all.yml
-    - include: ../tasks/domain-dev.yml
+    - include: tasks/domain-all.yml
+    - include: tasks/domain-dev.yml
+
+    - set_fact: domain={{ domain }}

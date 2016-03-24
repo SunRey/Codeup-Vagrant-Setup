@@ -1,12 +1,9 @@
 ---
-- include: ../../../prompts/vagrant/domain.yml
+- include: ../../../prompts/dev-domain.yml
 
 - name: Create Python 2.7 Site
   hosts: codeup-vm
-  remote_user: vagrant
-
-  vars:
-    python_version: 2.7
 
   roles:
-    - bbatsche.Python
+    - role: bbatsche.Python
+      python_version: 2.7

@@ -1,18 +1,16 @@
 ---
 - name: Initialize Vagrant Box
   hosts: codeup-vm
-  remote_user: vagrant
 
   # Manually specify these since Vagrant doesn't seem to use ansible/hosts so it can't find them automatically
   vars_files:
     - ../../hosts/group_vars/all.yml
-    - ../../hosts/host_vars/vagrant.yml
-
-  vars:
-    dynamic_php: no
-    copy_index_php: yes
+    - ../../hosts/host_vars/codeup-vm.yml
 
   roles:
     - bbatsche.Base
-    - bbatsche.Codeup-PHP
     - bbatsche.MySQL-Install
+    - role: bbatsche.Codeup-PHP
+      dynamic_php: no
+      copy_index_php: yes
+

@@ -1,12 +1,9 @@
 ---
-- include: ../../../prompts/vagrant/domain.yml
+- include: ../../../prompts/dev-domain.yml
 
 - name: Create Static PHP Site
   hosts: codeup-vm
-  remote_user: vagrant
-
-  vars:
-    dynamic_php: no
 
   roles:
-    - bbatsche.Codeup-PHP
+    - role: bbatsche.Codeup-PHP
+      dynamic_php: no
