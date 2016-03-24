@@ -1,11 +1,7 @@
 ---
 app_env: prod
 
-www_home: /srv/www
-
-mongodb_admin:  "{{ lookup('env', 'USER') }}"
-mysql_admin:    "{{ lookup('env', 'USER') }}"
-postgres_admin: "{{ lookup('env', 'USER') }}"
+db_admin:  "{{ lookup('env', 'USER') }}"
 
 git_home:              /var/git
 git_remote:            production

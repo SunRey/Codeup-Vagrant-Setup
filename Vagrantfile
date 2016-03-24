@@ -89,10 +89,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.cache.enable :gem
     # config.cache.enable :pip
 
-    config.cache.enable :generic, {
-      "rbenv" => { cache_dir: "/usr/local/rbenv/cache" }
-    }
-
     config.cache.synced_folder_opts = {
       type: :nfs,
       # The nolock option can be useful for an NFSv3 client that wants to avoid the

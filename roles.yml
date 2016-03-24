@@ -1,7 +1,7 @@
 ---
 - src: bbatsche.Base
   path: ansible/roles
-  version: v1.2.0
+  version: v1.2.1
 
 - src: bbatsche.Nginx
   path: ansible/roles
@@ -29,24 +29,25 @@
 
 - src: bbatsche.MongoDB-Install
   path: ansible/roles
-  version: v1.0.1
+  version: v2.0.0
 
 - src: bbatsche.MongoDB-Manage
   path: ansible/roles
-  version: v1.0.1
+  version: v2.0.0
 
 - src: bbatsche.MySQL-Install
   path: ansible/roles
-  version: v1.0.1
+  version: v2.0.0
 
 - src: bbatsche.MySQL-Manage
   path: ansible/roles
-  version: v1.0.1
+  version: v2.0.0
 
 - src: bbatsche.PostgreSQL-Install
   path: ansible/roles
+  version: v2.0.0
 
 - src: bbatsche.PostgreSQL-Manage
   path: ansible/roles
-  version: v1.0.1
+  version: v2.0.0
 
