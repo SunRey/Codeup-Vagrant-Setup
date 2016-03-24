@@ -1,9 +1,10 @@
 ---
+- include: ../../../prompts/dev-domain.yml
 - include: ../../../prompts/database.yml
 - include: ../../../prompts/db-user.yml
 
-- name: Create MySQL Database
+- name: Create WordPress Application
   hosts: codeup-vm
 
   roles:
-    - bbatsche.MySQL-Manage
+    - WordPress

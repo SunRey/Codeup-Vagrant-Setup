@@ -1,0 +1,11 @@
+---
+- hosts: all
+  gather_facts: no
+
+  vars_prompt:
+  - name:    db_name
+    prompt:  Database Name (e.g. something_db)
+    private: no
+
+  pre_tasks:
+    - set_fact: db_name={{ db_name }}

@@ -1,30 +1,9 @@
 ---
+- include: ../../../prompts/database.yml
+- include: ../../../prompts/db-user.yml
+
 - name: Create MongoDB Database
-  hosts: vagrant
-  remote_user: vagrant
-
-  vars:
-    mongodb_roles: dbOwner
-  vars_prompt:
-    - name:    db_name
-      prompt:  Database Name (e.g. something_db)
-      private: no
-    - name:    new_mongodb_user
-      prompt:  Database Owner (e.g. something_user)
-      private: no
-    - name:    new_mongodb_pass
-      prompt:  Password for Database Owner
-      private: yes
-      confirm: yes
-
-  pre_tasks:
-    - name: Password cannot be blank
-      assert:
-        that: new_mongodb_pass != ''
-    - name: Database owner cannot be MongoDB admin user
-      assert:
-        that: new_mongodb_user != mongodb_admin
+  hosts: codeup-vm
 
   roles:
-    - MongoDB/Install
-    - MongoDB/Manage
+    - bbatsche.MongoDB-Manage

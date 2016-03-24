@@ -1,24 +1,8 @@
 ---
+- include: ../../../prompts/db-user.yml
+
 - name: Create PostgreSQL Administrator
-  hosts: vagrant
-  remote_user: vagrant
-
-  vars:
-    role_attr: SUPERUSER
-  vars_prompt:
-    - name:    new_postgres_user
-      prompt:  New PostgreSQL Admin
-      private: no
-    - name:    new_postgres_pass
-      prompt:  New Admin Password
-      private: yes
-      confirm: yes
-
-  pre_tasks:
-    - name: Password cannot be blank
-      assert:
-        that: new_postgres_pass != ''
+  hosts: codeup-vm
 
   roles:
-    - PostgreSQL/Install
-    - PostgreSQL/Manage
+    - bbatsche.PostgreSQL-Manage

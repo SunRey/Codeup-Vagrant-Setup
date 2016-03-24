@@ -1,0 +1,7 @@
+---
+- name: Password cannot be blank
+  assert:
+    that: new_db_pass != ''
+- name: Cannot modify DB admin from within Ansible
+  assert:
+    that: new_db_user != db_admin

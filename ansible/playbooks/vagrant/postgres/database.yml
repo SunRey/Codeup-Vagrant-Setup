@@ -1,28 +1,9 @@
 ---
+- include: ../../../prompts/database.yml
+- include: ../../../prompts/db-user.yml
+
 - name: Create PostgreSQL Database
-  hosts: vagrant
-  remote_user: vagrant
-
-  vars_prompt:
-    - name:    db_name
-      prompt:  Database Name (e.g. something_db)
-      private: no
-    - name:    new_postgres_user
-      prompt:  Database Owner (e.g. something_user)
-      private: no
-    - name:    new_postgres_pass
-      prompt:  Password for Database Owner
-      private: yes
-      confirm: yes
-
-  pre_tasks:
-    - name: Password cannot be blank
-      assert:
-        that: new_postgres_pass != ''
-    - name: Database owner cannot be PostgreSQL admin user
-      assert:
-        that: new_postgres_user != postgres_admin
+  hosts: codeup-vm
 
   roles:
-    - PostgreSQL/Install
-    - PostgreSQL/Manage
+    - bbatsche.PostgreSQL-Manage

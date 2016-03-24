@@ -2,3 +2,5 @@
 env_name: dev
 
 http_root: /vagrant/sites
+
+db_admin: vagrant
