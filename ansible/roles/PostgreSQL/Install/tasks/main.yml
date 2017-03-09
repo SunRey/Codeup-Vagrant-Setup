@@ -5,7 +5,7 @@
     - postgresql
     - postgresql-contrib
     - python-psycopg2
-  sudo: yes
+  become: true
   register: postgres_install
 
 - include: lockdown.yml

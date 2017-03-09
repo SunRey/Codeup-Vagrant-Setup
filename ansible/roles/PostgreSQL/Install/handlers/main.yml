@@ -1,4 +1,4 @@
 ---
 - name: Restart PostgreSQL
   service: name=postgresql state=restarted
-  sudo: yes
+  become: true

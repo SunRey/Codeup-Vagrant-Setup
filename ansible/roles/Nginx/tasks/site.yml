@@ -10,7 +10,7 @@
   failed_when: >
     dir_create_result.state != "directory" or
     (dir_create_result.msg is defined and dir_create_result.msg != "chown failed")
-  sudo: yes
+  become: true
 
 - name: Create Public Directory
   file:
@@ -23,7 +23,7 @@
   failed_when: >
     dir_create_result.state != "directory" or
     (dir_create_result.msg is defined and dir_create_result.msg != "chown failed")
-  sudo: yes
+  become: true
 
 - name: Copy Site Config
   template:
@@ -32,7 +32,7 @@
     owner: "{{ ansible_ssh_user }}"
     group: www-data
     mode:  0640
-  sudo: yes
+  become: true
   notify: Restart Nginx
 
 - name: Activate Site
@@ -40,7 +40,7 @@
     src:   /etc/nginx/sites-available/{{ domain }}
     dest:  /etc/nginx/sites-enabled/{{ domain }}
     state: link
-  sudo: yes
+  become: true
   notify: Restart Nginx
 
 - name: Create Site Log Directory
@@ -50,4 +50,4 @@
     owner: www-data
     group: www-data
     mode:  0755
-  sudo: yes
+  become: true

@@ -1,7 +1,7 @@
 ---
 - name: Install System Ruby
   apt: package={{ item }} state=present
-  sudo: yes
+  become: true
   with_items:
     - ruby
     - ruby2.0
@@ -13,5 +13,5 @@
     state: present
     line: "gem: --no-rdoc --no-ri"
     regexp: "^gem:"
-  sudo: yes
+  become: true
   when: app_env is defined and app_env != "dev"

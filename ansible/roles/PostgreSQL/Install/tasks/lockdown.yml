@@ -6,14 +6,14 @@
     encrypted:       yes
     state:           present
     role_attr_flags: SUPERUSER
-  sudo: yes
+  become: true
   sudo_user: postgres
 
 - name: Disable Login for postres User
   postgresql_user:
     name:            postgres
     role_attr_flags: NOLOGIN
-  sudo: yes
+  become: true
   sudo_user: postgres
 
 - name: Require Password Authentication
@@ -26,5 +26,5 @@
   with_items:
     - postgres
     - all
-  sudo: yes
+  become: true
   notify: Restart PostgreSQL

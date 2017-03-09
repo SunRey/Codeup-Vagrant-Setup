@@ -10,7 +10,7 @@
   tasks:
     - name: Enable root User
       command: passwd -u root
-      sudo: yes
+      become: true
 
     - name: Allow root SSH Login
       lineinfile:
@@ -22,10 +22,10 @@
         - { key: 'PermitRootLogin', value: 'yes' }
         - { key: 'AllowUsers',      value: '{{ ansible_user_id }} root' }
       notify: Restart SSH
-      sudo: yes
+      become: true
 
   handlers:
     - name: Restart SSH
       service: name=ssh state=restarted
-      sudo: yes
+      become: true
 

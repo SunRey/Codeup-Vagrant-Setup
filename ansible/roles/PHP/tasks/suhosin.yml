@@ -1,17 +1,17 @@
 ---
 - name: Add Suhosin APT Key
   apt_key: url=https://sektioneins.de/files/repository.asc state=present
-  sudo: yes
+  become: true
 
 - name: Add Suhosin APT Repository
   apt_repository:
     repo: 'deb [arch=amd64] http://repo.suhosin.org/ ubuntu-trusty main'
     state: present
-  sudo: yes
+  become: true
 
 - name: Install Suhosin Extension
   apt: package=php7-suhosin-extension state=present
-  sudo: yes
+  become: true
   notify: Restart FPM
 
 - name: Enable Suhosin Configuration
@@ -19,7 +19,7 @@
     path:  /etc/php7/{{ item }}/conf.d/01-suhosin.ini
     src:   /etc/php7/mods-available/suhosin.ini
     state: link
-  sudo: yes
+  become: true
   with_items:
     - fpm
     - cli
@@ -31,7 +31,7 @@
     state: present
     regexp: "{{ item.regex }}"
     line: "{{ item.line }}"
-  sudo: yes
+  become: true
   notify: Restart FPM
   with_items:
     - { regex: '^;?suhosin\.log\.file\s?=',                        line: "suhosin.log.file = 479 ; S_ALL & ~S_SQL" }
@@ -53,7 +53,7 @@
     line: >
       suhosin.cookie.cryptkey = {{ lookup('password',
       storage_dir + '/' + ansible_hostname + '/suhosin-cookie-key chars=ascii_letters,digits length=64') }}
-  sudo: yes
+  become: true
   notify: Restart FPM
 
 - name: Set Session Encryption Key
@@ -64,7 +64,7 @@
     line: >
       suhosin.session.cryptkey = {{ lookup('password',
       storage_dir + '/' + ansible_hostname + '/suhosin-session-key chars=ascii_letters,digits length=64') }}
-  sudo: yes
+  become: true
   notify: Restart FPM
 
 - name: Allow CLI Scripts to Increase their Memory
@@ -73,4 +73,4 @@
     state: present
     regexp: ^;?suhosin\.memory_limit\s?=
     line: suhosin.memory_limit = 1G
-  sudo: yes
+  become: true

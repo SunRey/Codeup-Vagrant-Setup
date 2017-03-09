@@ -9,7 +9,7 @@
 
 - name: Copy Nginx 444 Filter
   copy: src=nginx-444.conf dest=/etc/fail2ban/filter.d/nginx-444.conf
-  sudo: yes
+  become: true
   notify: Restart Fail2Ban
 
 - name: Create Nginx Log Directory
@@ -19,7 +19,7 @@
     group: www-data
     mode: 0755
     state: directory
-  sudo: yes
+  become: true
 
 - name: Create Nginx Access Log
   file:
@@ -28,7 +28,7 @@
     group: www-data
     mode: 0644
     state: touch
-  sudo: yes
+  become: true
 
 - name: Copy Fail2ban Default Config
   template: src=fail2ban.conf.j2 dest=/etc/fail2ban/jail.local

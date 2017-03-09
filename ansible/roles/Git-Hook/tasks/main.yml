@@ -6,7 +6,7 @@
     path:  "{{ git_home }}/{{ domain }}.git"
     state: directory
     owner: "{{ ansible_ssh_user }}"
-  sudo: yes
+  become: true
 
 - name: Create Repo for Site
   shell: git init --bare
