@@ -6,7 +6,7 @@ group = www-data
 request_slowlog_timeout = 5s
 slowlog = /var/log/php-fpm/slowlog-{{ domain }}.log
 
-listen = /var/run/php5-fpm-{{ domain }}.sock
+listen = /var/run/php7-fpm-{{ domain }}.sock
 listen.owner = www-data
 listen.group = www-data
 listen.mode = 0666
@@ -31,6 +31,6 @@ env[TEMP] = /tmp
 {% if app_env == "dev" %}env[LARAVEL_ENV] = local{% endif %}
 
 
-php_admin_value[open_basedir] = /var/log/php:/var/lib/php5/session:{{ www_home }}/{{ domain }}:/tmp
+php_admin_value[open_basedir] = /var/log/php:/var/lib/php7/session:{{ www_home }}/{{ domain }}:/tmp
 php_admin_value[upload_tmp_dir] = /tmp
 php_admin_flag[suhosin.executor.disable_eval] = on

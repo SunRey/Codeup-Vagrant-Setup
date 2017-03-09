@@ -81,7 +81,7 @@ server {
     include fastcgi.conf;
 
   {% if site_type == "php" -%}
-    fastcgi_pass unix:/var/run/php5-fpm-{{ domain }}.sock;
+    fastcgi_pass unix:/var/run/php7-fpm-{{ domain }}.sock;
   {% else -%}
     # Eventually directly managing HHVM repo in production will probably add some performance
     # improvements, but as yet there isn't a clear way to change the setting on a per host basis

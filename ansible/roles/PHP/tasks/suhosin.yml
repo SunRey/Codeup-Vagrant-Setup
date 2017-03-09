@@ -10,14 +10,14 @@
   sudo: yes
 
 - name: Install Suhosin Extension
-  apt: package=php5-suhosin-extension state=present
+  apt: package=php7-suhosin-extension state=present
   sudo: yes
   notify: Restart FPM
 
 - name: Enable Suhosin Configuration
   file:
-    path:  /etc/php5/{{ item }}/conf.d/01-suhosin.ini
-    src:   /etc/php5/mods-available/suhosin.ini
+    path:  /etc/php7/{{ item }}/conf.d/01-suhosin.ini
+    src:   /etc/php7/mods-available/suhosin.ini
     state: link
   sudo: yes
   with_items:
@@ -27,7 +27,7 @@
 
 - name: Update Suhosin Configuration
   lineinfile:
-    dest: /etc/php5/mods-available/suhosin.ini
+    dest: /etc/php7/mods-available/suhosin.ini
     state: present
     regexp: "{{ item.regex }}"
     line: "{{ item.line }}"
@@ -47,7 +47,7 @@
 
 - name: Set Cookie Encryption Key
   lineinfile:
-    dest: /etc/php5/mods-available/suhosin.ini
+    dest: /etc/php7/mods-available/suhosin.ini
     state: present
     regexp: ^;?suhosin\.cookie\.cryptkey\s?=
     line: >
@@ -58,7 +58,7 @@
 
 - name: Set Session Encryption Key
   lineinfile:
-    dest: /etc/php5/mods-available/suhosin.ini
+    dest: /etc/php7/mods-available/suhosin.ini
     state: present
     regexp: ^;?suhosin\.session\.cryptkey\s?=
     line: >
@@ -69,7 +69,7 @@
 
 - name: Allow CLI Scripts to Increase their Memory
   lineinfile:
-    dest: /etc/php5/cli/php.ini
+    dest: /etc/php7/cli/php.ini
     state: present
     regexp: ^;?suhosin\.memory_limit\s?=
     line: suhosin.memory_limit = 1G
