@@ -103,6 +103,9 @@
 - include: phpunit.yml
   when: app_env == "dev"
 
+- include: psysh.yml
+  when: app_env == "dev"
+
 - name: Copy FPM Pool Config
   template: src=php-fpm-pool.conf.j2 dest=/etc/php5/fpm/pool.d/{{ domain }}.conf
   sudo: yes

@@ -1,0 +1,12 @@
+---
+- name: Create Composer Directory
+  file: path={{ ansible_user_dir }}/.composer state=directory
+
+- name: Install Psysh
+  composer:
+    command: require
+    arguments: psy/psysh:@stable
+    working_dir: "{{ ansible_user_dir }}/.composer/"
+    no_dev: no
+    prefer_dist: yes
+    optimize_autoloader: no
