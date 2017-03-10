@@ -23,6 +23,9 @@
     - php7.1-gd
     - php7.1-imagick
     - php7.1-fpm
+    - php7.1-mbstring
+    - php7.1-xml
+    - php7.1-zip
   notify: Restart FPM
 
 - name: Install Xdebug
