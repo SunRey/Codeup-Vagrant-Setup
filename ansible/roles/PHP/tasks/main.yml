@@ -105,10 +105,7 @@
     state: present
   when: app_env == "dev"
 
-- include: phpunit.yml
-  when: app_env == "dev"
-
-- include: psysh.yml
+- include: devtools.yml
   when: app_env == "dev"
 
 - name: Copy FPM Pool Config

@@ -1,0 +1,33 @@
+---
+- name: Create Composer Directory
+  file: path={{ ansible_user_dir }}/.composer state=directory
+
+- name: Check if PHPUnit Is Installed
+  stat:
+    path: "{{ ansible_user_dir }}/.composer/vendor/bin/psysh"
+  register: phpunitbin
+
+- name: Install PHPUnit
+  when: not phpunitbin.stat.exists
+  composer:
+    command: require
+    arguments: "phpunit/phpunit={{ phpunit_version }}"
+    working_dir: "{{ ansible_user_dir }}/.composer/"
+    no_dev: no
+    prefer_dist: yes
+    optimize_autoloader: no
+
+- name: Check If Psysh Is Installed
+  stat:
+    path: "{{ ansible_user_dir }}/.composer/vendor/bin/psysh"
+  register: psyshbin
+
+- name: Install Psysh
+  when: not psyshbin.stat.exists
+  composer:
+    command: require
+    arguments: psy/psysh:@stable
+    working_dir: "{{ ansible_user_dir }}/.composer/"
+    no_dev: no
+    prefer_dist: yes
+    optimize_autoloader: no
