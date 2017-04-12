@@ -5,4 +5,4 @@
 digital_ocean
 
 [warpspeed]
-; digital_ocean ansible_ssh_user=warpspeed
+; digital_ocean ansible_user=warpspeed

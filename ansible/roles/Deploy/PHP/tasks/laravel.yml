@@ -35,5 +35,5 @@
 - name: Don't forget to seed your database (if necessary)
   debug:
     msg: >
-      ssh {{ ansible_ssh_user }}@{{ ansible_ssh_host }}
+      ssh {{ ansible_user }}@{{ ansible_host }}
       '/usr/bin/php {{ www_home }}/{{ production_domain }}/artisan db:seed --force'

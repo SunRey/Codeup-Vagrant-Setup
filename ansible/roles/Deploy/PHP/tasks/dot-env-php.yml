@@ -3,6 +3,6 @@
   copy:
     src:   "{{ local_sites_dir }}/{{ local_domain }}/.env.php"
     dest:  "{{ www_home }}/{{ production_domain }}/.env.php"
-    owner: "{{ ansible_ssh_user }}"
+    owner: "{{ ansible_user }}"
     group: www-data
     mode:  0640
