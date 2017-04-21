@@ -1,6 +1,7 @@
 ---
 - name: Create Dynamic PHP Site
   hosts: production
+  remote_user: "{{ lookup('env', 'USER') }}"
 
   vars:
     dynamic_php: yes

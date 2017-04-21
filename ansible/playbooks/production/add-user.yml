@@ -1,0 +1,82 @@
+---
+- name: Add Admin User To Production Server
+  hosts: production
+  remote_user: "{{ console_user }}"
+
+  vars_prompt:
+    - name: ansible_sudo_pass
+      prompt: Sudo Password
+      private: yes
+    - name:    new_user_name
+      prompt:  New User Name
+      private: no
+      confirm: no
+    - name: new_user_pass
+      prompt: New User Password
+      private: yes
+      confirm: yes
+    - name: ssh_public_key_file
+      prompt: SSH Public Key File Path
+      private: no
+
+  vars:
+    console_user: "{{ lookup('env', 'USER') }}"
+
+  pre_tasks:
+    - name: Stat SSH Key File
+      register: sshkeyfile
+      delegate_to: 127.0.0.1
+      stat:
+        path: "{{ ssh_public_key_file }}"
+    - name: Make Sure SSH Key File Exists
+      assert:
+        that: sshkeyfile.stat.exists
+        msg:  "File not found: {{ ssh_public_key_file }}"
+
+  tasks:
+    - name: Create User Account
+      become: true
+      user:
+        name:     "{{ new_user_name }}"
+        password: "{{ new_user_pass | password_hash('sha512') }}"
+        shell:    /bin/bash
+        state:    present
+        groups:   www-data
+        append:   yes
+
+    - name: Add User to Sudoers
+      become: true
+      lineinfile:
+        dest:     /etc/sudoers
+        line:     "{{ new_user_name }} ALL=(ALL) ALL"
+        state:    present
+        validate: "visudo -cf %s"
+      tags:
+        - sudoer
+
+    - name: Allow Passwordless Nginx Reload
+      become: true
+      lineinfile:
+        dest:     /etc/sudoers
+        line:     "{{ new_user_name }} ALL=NOPASSWD: /usr/sbin/service nginx reload"
+        state:    present
+        validate: "visudo -cf %s"
+      tags:
+        - sudoer
+
+    - name: Copy Public Key to authorized_keys
+      become: true
+      authorized_key:
+        user: "{{ new_user_name }}"
+        key:  "{{ lookup('file', ssh_public_key_file) }}"
+
+    - name: Allow Login in Sshd Config
+      become: true
+      lineinfile:
+        dest:  /etc/ssh/sshd_config
+        state: present
+        line:  "AllowUsers {{ new_user_name }}"
+
+    - name: Restart SSH
+      service: name=ssh state=restarted
+      become: true

@@ -1,0 +1,79 @@
+---
+- name: Setup HTTPS For A Site
+  hosts: production
+  remote_user: "{{ console_user }}"
+
+  vars_prompt:
+    - name: ansible_sudo_pass
+      prompt: Sudo Password
+      private: yes
+    - name: domain
+      prompt: Domain Name
+      private: no
+    - name: admin_email
+      prompt: Email Address for Notifications
+      private: no
+
+  vars:
+    console_user: "{{ lookup('env', 'USER') }}"
+    enable_https: true
+
+  tasks:
+    - name: Add Certbot Repository
+      apt_repository:
+        repo: 'ppa:certbot/certbot'
+        state: present
+      become: true
+    - name: Install Certbot and Dependencies
+      apt:
+        package: "{{ item }}"
+        state: present
+      become: true
+      with_items:
+        - python-support
+        - python-ndg-httpsclient
+        - certbot
+    - name: Obtain HTTPS Certificate With Certbot
+      become: true
+      shell: "certbot certonly --webroot -w {{ www_home }}/{{ domain }}/public -d {{ domain }} --email {{ admin_email }} --agree-tos --non-interactive"
+
+    - name: Modify Nginx Config - Enable HTTPS
+      blockinfile:
+        dest: "/etc/nginx/sites-available/{{ domain }}"
+        insertafter: "# port to listen on"
+        block: |
+          listen 443 ssl;
+          ssl on;
+          ssl_certificate /etc/letsencrypt/live/{{ domain }}/fullchain.pem;
+          ssl_certificate_key /etc/letsencrypt/live/{{ domain }}/privkey.pem;
+          ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # disable SSLv3
+
+    - name: Modify Nginx Config - Redirect HTTP to HTTPS
+      replace:
+        dest: "/etc/nginx/sites-available/{{ domain }}"
+        regexp: "{{ item.re }}"
+        replace: "{{ item.replace }}"
+      with_items:
+        - { re: 'server_name\s*www.*', replace: "server_name {{ domain }} www.{{ domain }};" }
+        - { re: '(\s*return 301 )\$scheme(.*)', replace: '\1https\2' }
+
+    - name: Restart Nginx
+      become: true
+      service:
+        name: nginx
+        state: restarted
+        
+    - name: Setup Automated Certificate Renewal
+      become: true
+      cron:
+        state: present
+        name: "renew https certs"
+        # let's encrypt asks us to pick a random minute of the hour
+        # see https://certbot.eff.org/all-instructions/
+        job: "sleep $((${RANDOM} % 60))m; /usr/bin/certbot renew"
+        minute: 0
+        hour: 0
+        day: "*"
+        weekday: "*"
+        month: "*"
+

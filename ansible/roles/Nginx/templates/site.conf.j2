@@ -15,8 +15,12 @@ server {
 }
 
 server {
+
+# BEGIN ANSIBLE MANAGED BLOCK
+  # port to listen on
   listen [::]:80;
   listen 80;
+# END ANSIBLE MANAGED BLOCK
 
   # The host name to respond to
   server_name {{ domain }};
@@ -37,6 +41,11 @@ server {
 {% if app_env == "dev" %}
   autoindex on;
 {% endif %}
+
+  # allow certbot domain verification
+  location ~ /\.well-known/acme-challenge/.* {
+    allow all;
+  }
 
   # Skip access log and not found logging for favicons and robots.txt
   location = /favicon.ico {

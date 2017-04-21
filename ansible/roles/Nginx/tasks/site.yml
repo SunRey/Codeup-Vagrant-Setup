@@ -3,7 +3,7 @@
   file:
     path:  "{{ www_home }}/{{ domain }}"
     state: directory
-    owner: "{{ ansible_ssh_user }}"
+    owner: "{{ ansible_user }}"
     group: www-data
     mode:  03755
   register: dir_create_result
@@ -16,7 +16,7 @@
   file:
     path:  "{{ www_home }}/{{ domain }}/public"
     state: directory
-    owner: "{{ ansible_ssh_user }}"
+    owner: "{{ ansible_user }}"
     group: www-data
     mode:  03755
   register: dir_create_result
@@ -29,7 +29,7 @@
   template:
     src:   site.conf.j2
     dest:  /etc/nginx/sites-available/{{ domain }}
-    owner: "{{ ansible_ssh_user }}"
+    owner: "{{ ansible_user }}"
     group: www-data
     mode:  0640
   become: true

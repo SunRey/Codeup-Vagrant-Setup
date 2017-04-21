@@ -11,7 +11,7 @@
   become: true
 
 - name: Create NVM Directories
-  file: path={{ nvm_root }}/{{ item }} state=directory owner={{ ansible_ssh_user }} mode=0775
+  file: path={{ nvm_root }}/{{ item }} state=directory owner={{ ansible_user }} mode=0775
   with_items:
     - alias
     - bin

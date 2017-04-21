@@ -11,7 +11,7 @@
   file:
     path: "{{ rbenv_root }}"
     state: directory
-    owner: "{{ ansible_ssh_user }}"
+    owner: "{{ ansible_user }}"
     mode: 0755
   become: true
 

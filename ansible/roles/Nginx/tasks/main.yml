@@ -32,7 +32,7 @@
   file:
     dest: /etc/nginx/sites-available
     state: directory
-    owner: "{{ ansible_ssh_user }}"
+    owner: "{{ ansible_user }}"
     group: www-data
     mode: 0755
   become: true
