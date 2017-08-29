@@ -6,7 +6,3 @@
     - bower
     - gulp
     - grunt-cli
-
-- name: Install SASS
-  gem: name=sass user_install=no state=present
-  become: true
