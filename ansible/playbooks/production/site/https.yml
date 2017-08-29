@@ -62,7 +62,7 @@
       service:
         name: nginx
         state: restarted
-        
+
     - name: Setup Automated Certificate Renewal
       become: true
       cron:
@@ -70,10 +70,10 @@
         name: "renew https certs"
         # let's encrypt asks us to pick a random minute of the hour
         # see https://certbot.eff.org/all-instructions/
-        job: "sleep $((${RANDOM} % 60))m; /usr/bin/certbot renew"
+        job: "sleep $((${RANDOM} % 60))m; /usr/bin/certbot renew; service nginx restart"
         minute: 0
         hour: 0
         day: "*"
-        weekday: "*"
+        weekday: "0"
         month: "*"
 
