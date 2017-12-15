@@ -1,7 +1,7 @@
 ---
 ##### Local Development Domain #####
 # Set this to the local directory where your application is installed
-# It should look like "local_domain: blog.dev"
+# It should look like "local_domain: blog.test"
 local_domain: ## FILL ME IN ##
 
 ##### Production Domain Name #####

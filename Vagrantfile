@@ -7,7 +7,7 @@
 
 box      = 'ubuntu/trusty64'
 hostname = 'codeup-trusty'
-domain   = 'codeup.dev'
+domain   = 'codeup.test'
 ip       = '192.168.77.77'
 ram      = '512'
 
@@ -51,8 +51,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Plugin specific options. Helpful for development but most likely not necessary for class
   if Vagrant.has_plugin? "vagrant-dns"
-    config.dns.tld      = "dev"
-    config.dns.patterns = [/^.*\.dev$/]
+    config.dns.tld      = "test"
+    config.dns.patterns = [/^.*\.test$/]
   end
 
   if Vagrant.has_plugin? "vagrant-cachier"

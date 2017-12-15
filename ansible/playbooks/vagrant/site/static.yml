@@ -7,16 +7,16 @@
     dynamic_php: no
   vars_prompt:
     - name:    domain
-      prompt:  Domain Name (e.g. codeup.dev)
+      prompt:  Domain Name (e.g. codeup.test)
       private: no
 
   pre_tasks:
     - name: Clean domain name
       set_fact: "domain={{ domain | trim | lower }}"
 
-    - name: Development domains must end with .dev
+    - name: Development domains must end with .test
       assert:
-        that: domain.endswith(".dev")
+        that: domain.endswith(".test")
 
     - name: Domains cannot have spaces
       assert:

@@ -181,7 +181,7 @@ ansible-playbook ansible/playbooks/vagrant/site/python3.yml
 ansible-playbook ansible/playbooks/vagrant/site/ruby.yml
 ```
 
-These playbooks will first prompt you for a new domain name (all domains in the Vagrant environment must end with `.dev`), install any necessary software, create the required configuration files, and then restart Nginx, if needed.
+These playbooks will first prompt you for a new domain name (all domains in the Vagrant environment must end with `.test`), install any necessary software, create the required configuration files, and then restart Nginx, if needed.
 
 #### Static vs. Dynamic
 
@@ -580,7 +580,7 @@ vagrant plugin install vagrant-vbguest
 
 ## DNS
 
-Your Mac can be configured to resolve any domain ending in `.dev` to the Vagrant server. To do this, you must install the [`vagrant-dns`](https://github.com/BerlinVagrant/vagrant-dns) plugin. First, install the plugin itself:
+Your Mac can be configured to resolve any domain ending in `.test` to the Vagrant server. To do this, you must install the [`vagrant-dns`](https://github.com/BerlinVagrant/vagrant-dns) plugin. First, install the plugin itself:
 
 ```bash
 vagrant plugin install vagrant-dns
